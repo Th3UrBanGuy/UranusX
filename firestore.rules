@@ -1,0 +1,86 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper function to check if the requesting user is an Admin
+    function isAdmin() {
+      // Admins have a 'role' field set to 'Admin' in their own document.
+      // Use exists() to prevent errors if the user doc or role field doesn't exist.
+      return exists(/databases/$(database)/documents/users/$(request.auth.uid)) && 
+             get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'Admin';
+    }
+
+    // --- Global Admin Write Access ---
+    // This rule gives an admin write access to the entire database.
+    // Read access is handled by more specific rules below.
+    match /{document=**} {
+      allow write: if isAdmin();
+    }
+
+    // --- Publicly Readable Collections ---
+    // These collections contain public content for the app.
+    // Anyone (including the server for pre-rendering) can read them.
+    match /categories/{docId} {
+      allow read: if true;
+    }
+    match /platforms/{docId} {
+      allow read: if true;
+    }
+    match /notifications/{docId} {
+      allow read: if true;
+    }
+    match /subscriptionPlans/{docId} {
+       allow read: if true;
+    }
+    
+    // --- License Keys Collection ---
+    match /licenseKeys/{keyId} {
+       allow read: if true;
+       
+       // Allow a user to update a key IF:
+       // 1. They are authenticated.
+       // 2. They are only adding their own user ID to the 'claims' array.
+       // 3. The claim limit has not been reached.
+       // 4. They are not modifying any other fields besides 'claims' and 'status'.
+       allow update: if request.auth != null &&
+                      request.resource.data.claims.size() == resource.data.claims.size() + 1 &&
+                      request.resource.data.claims[resource.data.claims.size()].userId == request.auth.uid &&
+                      resource.data.claims.size() < resource.data.maxClaims &&
+                      request.resource.data.diff(resource.data).affectedKeys().hasOnly(['claims', 'status']);
+    }
+    
+    // --- Users Collection (Private) ---
+    match /users/{userId} {
+      function isOwner() {
+        return request.auth.uid == userId;
+      }
+      
+      // A user can read their own profile. Admins can read any profile.
+      allow get: if isOwner() || isAdmin();
+
+      // Admins can list all users for the management panel.
+      allow list: if isAdmin();
+      
+      // A user can create their own account during signup.
+      allow create: if isOwner();
+      
+      // A user can update their own data, but NOT their role.
+      // An owner can update their own subscriptions.
+      // Admins can update anything.
+      allow update: if (isOwner() && (request.resource.data.role == resource.data.role || request.resource.data.diff(resource.data).affectedKeys().hasOnly(['subscriptions']))) || isAdmin();
+
+      // Only admins can delete users.
+      allow delete: if isAdmin();
+    }
+    
+    // --- Settings Collection ---
+    match /settings/adminSignup {
+        // Allow ANYONE to READ the admin signup settings.
+        // This is necessary for the dynamic signup page to check if it's enabled.
+        allow get: if true;
+        
+        // Write access is still restricted to admins by the global rule above.
+    }
+  }
+}

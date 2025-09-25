@@ -1,0 +1,95 @@
+
+{
+  "placeholderImages": [
+    {
+      "id": "netflix",
+      "description": "Netflix Logo",
+      "imageUrl": "https://picsum.photos/seed/netflix/300/150",
+      "imageHint": "Netflix logo"
+    },
+    {
+      "id": "hulu",
+      "description": "Hulu Logo",
+      "imageUrl": "https://picsum.photos/seed/hulu/300/150",
+      "imageHint": "Hulu logo"
+    },
+    {
+      "id": "disney",
+      "description": "Disney+ Logo",
+      "imageUrl": "https://picsum.photos/seed/disney/300/150",
+      "imageHint": "Disney logo"
+    },
+    {
+      "id": "youtube",
+      "description": "YouTube TV Logo",
+      "imageUrl": "https://picsum.photos/seed/youtube/300/150",
+      "imageHint": "YouTube logo"
+    },
+    {
+      "id": "sling",
+      "description": "Sling TV Logo",
+      "imageUrl": "https://picsum.photos/seed/sling/300/150",
+      "imageHint": "Sling TV logo"
+    },
+    {
+      "id": "espn",
+      "description": "ESPN+ Logo",
+      "imageUrl": "https://picsum.photos/seed/espn/300/150",
+      "imageHint": "ESPN logo"
+    },
+    {
+      "id": "fubo",
+      "description": "FuboTV Logo",
+      "imageUrl": "https://picsum.photos/seed/fubo/300/150",
+      "imageHint": "FuboTV logo"
+    },
+    {
+      "id": "cn",
+      "description": "Cartoon Network Logo",
+      "imageUrl": "https://picsum.photos/seed/cn/300/150",
+      "imageHint": "Cartoon Network logo"
+    },
+    {
+      "id": "boomerang",
+      "description": "Boomerang Logo",
+      "imageUrl": "https://picsum.photos/seed/boomerang/300/150",
+      "imageHint": "Boomerang logo"
+    },
+    {
+      "id": "prime",
+      "description": "Prime Video Logo",
+      "imageUrl": "https://picsum.photos/seed/prime/300/150",
+      "imageHint": "Prime Video logo"
+    },
+    {
+      "id": "hbo",
+      "description": "HBO Max Logo",
+      "imageUrl": "https://picsum.photos/seed/hbo/300/150",
+      "imageHint": "HBO logo"
+    },
+    {
+      "id": "peacock",
+      "description": "Peacock Logo",
+      "imageUrl": "https://picsum.photos/seed/peacock/300/150",
+      "imageHint": "Peacock logo"
+    },
+    {
+      "id": "directv",
+      "description": "DirecTV Stream Logo",
+      "imageUrl": "https://picsum.photos/seed/directv/300/150",
+      "imageHint": "DirecTV logo"
+    },
+    {
+      "id": "nfl",
+      "description": "NFL+ Logo",
+      "imageUrl": "https://picsum.photos/seed/nfl/300/150",
+      "imageHint": "NFL logo"
+    },
+    {
+      "id": "nick",
+      "description": "Nickelodeon Logo",
+      "imageUrl": "https://picsum.photos/seed/nick/300/150",
+      "imageHint": "Nickelodeon logo"
+    }
+  ]
+}
